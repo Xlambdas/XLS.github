@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <body style="font-size: 48px; text-align: center; margin-top: 100px;">
+    <div id="consigne">Lorsqu'e vous connaisez le mot, appuyez sur la touche "t". Sinon, appuyez sur "f".</div>
     <div id="stimulus">Appuyez sur ESPACE pour commencer</div>
 
     <script>
@@ -30,7 +31,7 @@
 
       function runTrial() {
         if (index >= trials.length) {
-          stimulus.innerHTML = "Fin de la démo";
+          showResults();
           return;
         }
 
@@ -42,6 +43,35 @@
             stimulus.innerHTML = trials[index].word;
             startTime = performance.now();
         }, fixationDuration);
+      }
+
+      function showResults() {
+        stimulus.innerHTML = "Fin de la démo";
+
+        let html = `
+          <table border="1" style="margin: 40px auto; font-size: 24px; border-collapse: collapse;">
+            <tr>
+              <th>Stimulus</th>
+              <th>Réponse</th>
+              <th>Correct ?</th>
+              <th>Temps (ms)</th>
+            </tr>
+        `;
+
+        for (let r of results) {
+          html += `
+            <tr>
+              <td>${r.stimulus}</td>
+              <td>${r.response}</td>
+              <td>${r.correct ? "true" : "false"}</td>
+              <td>${r.rt}</td>
+            </tr>
+          `;
+        }
+
+        html += "</table>";
+
+        resultsDiv.innerHTML = html;
       }
 
       document.addEventListener("keydown", (e) => {
