@@ -6,7 +6,7 @@
       <p>Basé sur l'article de Lize Van der Linden et al. (2018)</p>
       <p>Lorsque vous connaissez le mot, appuyez sur la touche "t". Sinon, appuyez sur "f".</p>
 
-      <p>Lorsque vous êtes prêt, appuyez sur la barre ESPACE pour commencer.</p>
+      <p>Appuyez sur la barre ESPACE pour commencer.</p>
     </div>
     <div id="hint"></div>
     <div id="results"></div>
@@ -66,10 +66,10 @@
         let html = `
           <table border="1" style="margin: 40px auto; font-size: 24px; border-collapse: collapse;">
             <tr>
-              <th>Stimulus</th>
-              <th>Réponse</th>
-              <th>Correct ?</th>
-              <th>Temps (ms)</th>
+              <th> Stimulus </th>
+              <th> Réponse </th>
+              <th> Correct ? </th>
+              <th> Temps (ms) </th>
             </tr>
         `;
 
@@ -109,7 +109,7 @@
         if (e.key !== "f" && e.key !== "t") return;
 
         const rt = Math.round(performance.now() - startTime);
-        const response = (e.key === "f")? "mot" : "non-mot";
+        const response = (e.key === "t") ? "mot" : "non-mot";
         const correct = ((response === "mot") === trials[index].isWord);
 
         results.push({
