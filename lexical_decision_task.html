@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <body style="font-size: 48px; text-align: center; margin-top: 100px;">
+    <div id="stimulus"></div>
+
+    <script>
+      const trials = [
+        { word: "TABLE", isWord: true },
+        { word: "FLORN", isWord: false },
+        { word: "ANIMAL", isWord: true },
+        { word: "BLERF", isWord: false },
+      ];
+
+      let index = 0;
+      let startTime = 0;
+
+      function nextTrial() {
+        if (index >= trials.length) {
+          stimulus.innerHTML = "Fin de la démo";
+          return;
+        }
+        stimulus.innerHTML = trials[index].word;
+        startTime = performance.now();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+        const rt = Math.round(performance.now() - startTime);
+        const response = (e.key === "ArrowLeft");
+
+        console.log({
+          stimulus: trials[index].word,
+          correct: response === trials[index].isWord,
+          rt: rt
+        });
+
+        index++;
+        nextTrial();
+      });
+
+      nextTrial();
+    </script>
+  </body>
+</html>
