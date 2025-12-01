@@ -8,10 +8,21 @@
       let waitingStart = true;
 
       const trials = [
-        { word: "TABLE", isWord: true },
-        { word: "FLORN", isWord: false },
-        { word: "ANIMAL", isWord: true },
-        { word: "BLERF", isWord: false },
+        { word: "SURMODE", isWord: false },
+        { word: "CITRON", isWord: true },
+        { word: "GNUT", isWord: false },
+        { word: "GEGALOP", isWord: false },
+        { word: "FOREGO", isWord: true },
+        { word: "HORAIRE", isWord: true },
+        { word: "PREVÔTAL", isWord: true },
+        { word: "BIERRA", isWord: false },
+        { word: "BOUGNOUL", isWord: true },
+        { word: "JARDAFEU", isWord: false },
+        { word: "BLISS", isWord: true },
+        { word: "OLDE", isWord: false },
+        { word: "AQUARIUM", isWord: true },
+        { word: "FRAPTURE", isWord: false },
+        { word: "FANFARE", isWord: true }
       ];
 
       let index = 0;
@@ -34,20 +45,17 @@
       }
 
       document.addEventListener("keydown", (e) => {
-        // --- Première étape : attente d'un appui sur ESPACE ---
         if (waitingStart && e.code === "Space") {
           waitingStart = false;
           runTrial();
           return;
         }
 
-        if (waitingStart) return; // On ignore tout tant que la tâche n’a pas commencé
-
-        // --- Réponses Left/Right ---
-        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        if (waitingStart) return;
+        if (e.key !== "f" && e.key !== "t") return;
 
         const rt = Math.round(performance.now() - startTime);
-        const response = (e.key === "ArrowLeft");
+        const response = (e.key === "f");
 
         console.log({
           stimulus: trials[index].word,
