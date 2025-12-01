@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
   <body style="font-size: 48px; text-align: center; margin-top: 100px;">
-    <div id="stimulus"></div>
+    <div id="stimulus">Appuyez sur ESPACE pour commencer</div>
 
     <script>
+      const fixationDuration = 500;
+      let waitingStart = true;
+
       const trials = [
         { word: "TABLE", isWord: true },
         { word: "FLORN", isWord: false },
@@ -14,16 +17,33 @@
       let index = 0;
       let startTime = 0;
 
-      function nextTrial() {
+      function runTrial() {
         if (index >= trials.length) {
           stimulus.innerHTML = "Fin de la démo";
           return;
         }
-        stimulus.innerHTML = trials[index].word;
-        startTime = performance.now();
+
+        // Étape 1 : afficher la croix
+        stimulus.innerHTML = "+";
+
+        // Étape 2 : après 500 ms, afficher le stimulus
+        setTimeout(() => {
+            stimulus.innerHTML = trials[index].word;
+            startTime = performance.now();
+        }, fixationDuration);
       }
 
       document.addEventListener("keydown", (e) => {
+        // --- Première étape : attente d'un appui sur ESPACE ---
+        if (waitingStart && e.code === "Space") {
+          waitingStart = false;
+          runTrial();
+          return;
+        }
+
+        if (waitingStart) return; // On ignore tout tant que la tâche n’a pas commencé
+
+        // --- Réponses Left/Right ---
         if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
 
         const rt = Math.round(performance.now() - startTime);
@@ -36,10 +56,8 @@
         });
 
         index++;
-        nextTrial();
+        runTrial();
       });
-
-      nextTrial();
     </script>
   </body>
 </html>
