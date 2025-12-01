@@ -12,6 +12,10 @@
     <script>
       const fixationDuration = 500;
       let waitingStart = true;
+      let index = 0;
+      let startTime = 0;
+      let experimentFinished = false;
+      let results = [];
 
       const trials = [
         { word: "SURMODE", isWord: false },
@@ -31,16 +35,17 @@
         { word: "FANFARE", isWord: true }
       ];
 
-      let index = 0;
-      let startTime = 0;
-
       function runTrial() {
         if (index >= trials.length) {
-          showResults();
+          experimentFinished = true;
+          stimulus.innerHTML = "Fin de la démo<br><span style='font-size:32px'>Appuie sur ESPACE pour afficher les résultats</span>";
           return;
         }
 
         // Étape 1 : afficher la croix
+        setTimeout(() => {
+          stimulus.innerHTML = "";
+        }, fixationDuration);
         stimulus.innerHTML = "+";
 
         // Étape 2 : après 500 ms, afficher le stimulus
@@ -51,8 +56,6 @@
       }
 
       function showResults() {
-        stimulus.innerHTML = "Fin de la démo";
-
         let html = `
           <table border="1" style="margin: 40px auto; font-size: 24px; border-collapse: collapse;">
             <tr>
@@ -87,14 +90,21 @@
         }
 
         if (waitingStart) return;
+
+        if (experimentFinished && e.code === "Space") {
+          showResults();
+          return;
+        }
+
         if (e.key !== "f" && e.key !== "t") return;
 
         const rt = Math.round(performance.now() - startTime);
-        const response = (e.key === "f");
+        const response = (e.key === "f")? "mot" : "non-mot";
 
-        console.log({
+        results.push({
           stimulus: trials[index].word,
-          correct: response === trials[index].isWord,
+          response: response,
+          correct: (response === "mot") === trials[index].isWord,
           rt: rt
         });
 
