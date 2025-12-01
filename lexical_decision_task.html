@@ -3,12 +3,11 @@
   <body style="font-size: 48px; text-align: center; margin-top: 100px;">
     <div id="stimulus">
       <h1>Lexical Decision Task - Démo</h1>
-      <p>Basé sur l'article de Lize Van der Linden et al. (2018)</p>
-      <p>Lorsque vous connaissez le mot, appuyez sur la touche "t". Sinon, appuyez sur "f".</p>
+      <p><em>Basé sur l'article de Lize Van der Linden et al. (2018)</em></p><br>
+      <p>Lorsque vous connaissez le mot, appuyez sur la touche <strong>"T"</strong>. Sinon, appuyez sur <strong>"F"</strong>.</p>
 
       <p>Appuyez sur la barre ESPACE pour commencer.</p>
     </div>
-    <div id="hint"></div>
     <div id="results"></div>
 
     <script>
@@ -21,7 +20,6 @@
 
       const stimulusDiv = document.getElementById("stimulus");
       const resultsDiv = document.getElementById("results");
-      const hintDiv = document.getElementById("hint");
 
       const trials = [
         { word: "SURMODE", isWord: false },
@@ -48,9 +46,9 @@
           return;
         }
 
-        // Étape 1 : afficher la croix
+        // Step 1 : show fixation cross
         stimulusDiv.innerHTML = "+";
-        // Étape 2 : après 500 ms, afficher le stimulus
+        // Step 2 : after 500 ms, show stimulus
         setTimeout(() => {
             stimulusDiv.innerHTML = trials[index].word;
             startTime = performance.now();
