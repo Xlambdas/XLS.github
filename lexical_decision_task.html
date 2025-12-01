@@ -8,6 +8,8 @@
 
       <p>Lorsque vous êtes prêt, appuyez sur la barre ESPACE pour commencer.</p>
     </div>
+    <div id="hint"></div>
+    <div id="results"></div>
 
     <script>
       const fixationDuration = 500;
@@ -16,6 +18,10 @@
       let startTime = 0;
       let experimentFinished = false;
       let results = [];
+
+      const stimulusDiv = document.getElementById("stimulus");
+      const resultsDiv = document.getElementById("results");
+      const hintDiv = document.getElementById("hint");
 
       const trials = [
         { word: "SURMODE", isWord: false },
@@ -38,24 +44,25 @@
       function runTrial() {
         if (index >= trials.length) {
           experimentFinished = true;
-          stimulus.innerHTML = "Fin de la démo<br><span style='font-size:32px'>Appuie sur ESPACE pour afficher les résultats</span>";
+          stimulusDiv.innerHTML = "Fin de la démo";
           return;
         }
 
         // Étape 1 : afficher la croix
-        setTimeout(() => {
-          stimulus.innerHTML = "";
-        }, fixationDuration);
-        stimulus.innerHTML = "+";
-
+        stimulusDiv.innerHTML = "+";
         // Étape 2 : après 500 ms, afficher le stimulus
         setTimeout(() => {
-            stimulus.innerHTML = trials[index].word;
+            stimulusDiv.innerHTML = trials[index].word;
             startTime = performance.now();
         }, fixationDuration);
       }
 
       function showResults() {
+        if (results.length === 0) {
+          resultsDiv.innerHTML = "<div style='color:#fff'>Aucun résultat enregistré.</div>";
+          return;
+        }
+
         let html = `
           <table border="1" style="margin: 40px auto; font-size: 24px; border-collapse: collapse;">
             <tr>
@@ -78,39 +85,44 @@
         }
 
         html += "</table>";
-
         resultsDiv.innerHTML = html;
       }
 
       document.addEventListener("keydown", (e) => {
+        if (e.code === "Space") {
+          e.preventDefault();
+        }
         if (waitingStart && e.code === "Space") {
           waitingStart = false;
           runTrial();
           return;
         }
 
-        if (waitingStart) return;
-
         if (experimentFinished && e.code === "Space") {
           showResults();
           return;
         }
 
+        if (waitingStart  || experimentFinished) return;
+
+
         if (e.key !== "f" && e.key !== "t") return;
 
         const rt = Math.round(performance.now() - startTime);
         const response = (e.key === "f")? "mot" : "non-mot";
+        const correct = ((response === "mot") === trials[index].isWord);
 
         results.push({
           stimulus: trials[index].word,
           response: response,
-          correct: (response === "mot") === trials[index].isWord,
+          correct: correct,
           rt: rt
         });
 
         index++;
         runTrial();
       });
+      console.log("Démo prête. Variable 'trials' et 'results' disponibles.");
     </script>
   </body>
 </html>
