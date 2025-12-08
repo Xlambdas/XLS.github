@@ -1,13 +1,310 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #dd5151;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+.in-progress {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    display: inline-block;
+    margin-left: 10px;
+    font-style: italic;
+    background: rgba(213, 230, 171, 0.2);
+    color: rgb(213, 230, 171);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: rgb(213, 230, 171);
+    background: linear-gradient(135deg, rgb(25, 58, 60), #23494a);
+    min-height: 100vh;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 header {
-    background: #35424a;
-    color: #ffffff;
-    padding: 10px 0;
+    background: rgba(25, 58, 60, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgb(213, 230, 171);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgb(213, 230, 171);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #e7f3bf;
+}
+
+main {
+    flex: 1;
+    padding-top: 80px;
+    background: linear-gradient(
+        135deg,
+        rgba(25, 58, 60, 0.85),
+        rgba(25, 58, 60, 0.95)
+    ), url('https://source.unsplash.com/1600x900/?nature,forest') no-repeat center center/cover;
+    color: rgb(213, 230, 171);
+    position: relative;
+}
+
+.hero {
     text-align: center;
+    padding: 6rem 0;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInUp 1s ease;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.cta-button {
+    display: inline-block;
+    background: rgba(213, 230, 171, 0.15);
+    color: rgb(213, 230, 171);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgb(213, 230, 171);
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.cta-button:hover {
+    background: rgba(213, 230, 171, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.section {
+    padding: 5rem 0;
+    background: #f3f8e1; /* léger dérivé du vert pastel */
+    margin: 2rem 0;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: rgb(25, 58, 60);
+}
+
+.section p,
+.section ul {
+    text-align: justify;
+    font-size: 1.2rem;
+    color: #445;
+    margin-bottom: 2rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background: #eef4d8;
+    padding: 2rem;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(25, 58, 60, 0.3);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.project-card h3 {
+    color: rgb(25, 58, 60);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.project-card p {
+    color: #445;
+    margin-bottom: 1rem;
+}
+
+.project-link {
+    color: rgb(25, 58, 60);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.project-link:hover {
+    color: #23494a;
+}
+
+.skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.skill-tag {
+    background: linear-gradient(to right, rgb(25, 58, 60), #23494a);
+    color: rgb(213, 230, 171);
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-align: center;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+}
+
+.skill-tag:hover {
+    transform: scale(1.05);
+}
+
+.contact {
+    text-align: center;
+    padding: 1.2rem 0 0.5rem 0;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.contact-link {
+    display: inline-block;
+    background: rgb(25, 58, 60);
+    color: rgb(213, 230, 171);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    border-radius: 7px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.contact-link:hover {
+    background: #23494a;
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    color: rgb(213, 230, 171);
+    background: rgb(25, 58, 60);
+    opacity: 0.85;
+    margin-top: auto;
+    font-size: 0.95rem;
+}
+
+.sub-link {
+    display: inline-block;
+    font-weight: bold;
+    color: rgb(213, 230, 171);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.sub-link span {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-left: 5px;
+}
+
+.sub-link:hover {
+    color: #e7f3bf;
+}
+
+.sub-link:hover span {
+    transform: translateX(5px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+    }
 }
